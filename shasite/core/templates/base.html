@@ -1,0 +1,87 @@
+{% load static %}
+{% load core_tags %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static '/css/style.css' %}">
+    
+    <title>{{ title }}</title>
+</head>
+<body>
+{% block mainmenu %}
+    <ul class="header">
+        {% for m in menu %}
+            <li><a href="{% url m.url_name %}">{{ m.title }}</a></li>
+        {% endfor %}
+        
+        {% if request.user.is_authenticated %}
+            <li>{{ user.username }} | <a href="{% url 'logout' %}">Выйти</a></li>
+        {% else %}
+            <div class="reg_auth">
+                <a href="{% url 'register' %}">Регистрация</a>
+                |
+                <a href="{% url 'auth' %}">Войти</a>
+            </div>
+        {% endif %}
+    </ul>
+    
+    <hr>
+{% endblock mainmenu %}
+
+
+<ul>
+    {% if cat_selected == 0 %}
+        <li>Все категории</li>
+    {% else %}
+        <li><a href="{% url 'home' %}">Все категории</a></li>
+    {% endif %}
+
+    {% for c in cats %}
+    {% if c.article__count > 0 %}
+        {% if c.pk == cat_selected %}
+            <li>{{c.title}}</li>
+        {% else %}
+            <li>
+                <a href="{{c.get_absolute_url}}">{{c.title}}</a>
+            </li>
+        {% endif %}
+    {% endif %}
+    {% endfor %}
+</ul>
+
+
+
+
+{% block content %}
+{% endblock %}
+
+<style>*{list-style-type: none;}a{text-decoration: none;color: rgb(255, 208, 0); transition: .2s;font-size: 26px;}a:hover {color: rgb(93, 220, 93);}</style>
+<style>.header{max-width: 80%; margin: auto; display: flex; height: 80px; align-items: center; justify-content: space-around;}
+
+button{cursor: pointer;}
+
+.add_article_form{display: flex; justify-content: center; align-items: center;}
+
+.reg_auth{margin-right: 40px; width: 400px; text-align: right;}
+</style>
+
+<style>.preview_post_text{width: 759px;}</style>
+<style>.view_post_text{width: 1299px; margin: auto;}</style>
+<style>.form_error{color: red;}</style>
+
+
+<script type="text/javascript" src="{% static '/js/straw.js' %}"></script>
+
+<script>   
+    const repeating_input = document.querySelector('.repeating');
+
+    repeating_input.addEventListener('input', () =>{repeating_input.value = repeating_input.value.replaceAll(' ', '-');});
+</script>
+
+</body>
+</html>

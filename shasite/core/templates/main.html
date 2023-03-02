@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>{{ title }}</h1>
+    <ul>
+        {% for post in posts %}
+        <li>
+            <p>Категория: {{post.cat}}</p>
+            <p>Дата публикации: {{post.created_date|date:"d M, Y"}}</p>
+
+                {% if post.image %}
+                    <p><img src="{{post.image.url}}" alt="none" style="pointer-events: none;" width="340px"></p>
+                {% endif %}
+
+            <h2>{{ post.title }}</h2>
+            {% autoescape on %}
+            <div class="preview_post_text">
+                <p>{{ post.text|linebreaks|truncatewords:42 }}</p>
+            </div>
+            {% endautoescape %}
+            <div class="clear"></div>
+                <a href="{{ post.get_absolute_url }}">Читать статью</a>
+                <!-- <a href="{% url 'article' post.pk %}">Читать статью</a> -->
+                <hr>
+                </li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}
+

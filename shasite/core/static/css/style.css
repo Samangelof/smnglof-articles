@@ -1,0 +1,18 @@
+/* * {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+} */
+
+
+
+body{
+    background-color: rgb(22, 22, 125);
+    color: #fff;
+    font-size: 22px;
+}
+
+

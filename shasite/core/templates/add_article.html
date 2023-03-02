@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h1>{{title}}</h1>
+    <div class="add_article_form">
+
+        
+        <form action="{% url 'add_article' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div style="color: red; font-size: 26px;">{{ form.non_field_errors }}</div>
+            
+        {% for f in form %}
+            <p><label for="{{ f.id_for_label }}">{{ f.label }}:</label><br> {{ f }}</p>
+            <div style="color: red;">{{ f.errors }}</div>
+            
+        {% endfor %}
+            <button type="submit" id="send_article">Добавить</button>
+        </form>
+    </div>
+{% endblock %}
+
